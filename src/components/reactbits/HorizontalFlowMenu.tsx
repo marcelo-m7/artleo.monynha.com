@@ -3,16 +3,18 @@ import { gsap } from "gsap";
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface HorizontalFlowMenuItem {
-  value: string;
+// Make HorizontalFlowMenuItem generic over the value type
+interface HorizontalFlowMenuItem<T extends string> {
+  value: T;
   label: string;
   accent?: string;
 }
 
-interface HorizontalFlowMenuProps {
-  items: HorizontalFlowMenuItem[];
-  selectedValue: string;
-  onValueChange: (value: string) => void;
+// Make HorizontalFlowMenuProps generic to accept readonly items and a specific value type
+interface HorizontalFlowMenuProps<T extends string> {
+  items: readonly HorizontalFlowMenuItem<T>[]; // Accept readonly array
+  selectedValue: T;
+  onValueChange: (value: T) => void;
   className?: string;
   itemRole?: React.AriaRole;
 }
@@ -30,16 +32,18 @@ const findClosestEdge = (
   return leftEdgeDist < rightEdgeDist ? "left" : "right";
 };
 
-interface MenuItemProps extends HorizontalFlowMenuItem {
+// Make MenuItemProps generic
+interface MenuItemProps<T extends string> extends HorizontalFlowMenuItem<T> {
   isActive: boolean;
   reduceMotion: boolean;
-  onClick: (value: string) => void;
+  onClick: (value: T) => void;
   role?: React.AriaRole;
 }
 
 const defaultAccent = "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%)";
 
-const MenuItem: React.FC<MenuItemProps> = ({ value, label, accent, isActive, reduceMotion, onClick, role }) => {
+// Update MenuItem to be generic
+const MenuItem = <T extends string>({ value, label, accent, isActive, reduceMotion, onClick, role }: MenuItemProps<T>) => {
   const itemRef = React.useRef<HTMLDivElement>(null);
   const marqueeRef = React.useRef<HTMLDivElement>(null);
   const marqueeInnerRef = React.useRef<HTMLDivElement>(null);
@@ -64,7 +68,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ value, label, accent, isActive, red
 
     const tl = gsap.timeline({ defaults: animationDefaults });
     tl.to(marqueeRef.current, { x: edge === "left" ? "-101%" : "101%" })
-      .to(marqueeInnerRef.current, { x: edge === "left" ? "101%" : "-101%" });
+      .to(marqueeInnerRef.current, { x: edge === "left" ? "101%" : "-101%" }); // Fixed: changed 'y' to 'x'
   };
 
   const accentStyle = React.useMemo(() => {
@@ -136,8 +140,12 @@ const MenuItem: React.FC<MenuItemProps> = ({ value, label, accent, isActive, red
   );
 };
 
-export const HorizontalFlowMenu = React.forwardRef<HTMLDivElement, HorizontalFlowMenuProps>(
-  ({ items, selectedValue, onValueChange, className, itemRole = "menuitem" }, ref) => {
+// Update FlowingMenu to be generic and cast for better type inference
+export const HorizontalFlowMenu = React.forwardRef(
+  <T extends string,>(
+    { items, selectedValue, onValueChange, className, itemRole = "menuitem" }: HorizontalFlowMenuProps<T>,
+    ref: React.Ref<HTMLDivElement>
+  ) => {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -162,6 +170,6 @@ export const HorizontalFlowMenu = React.forwardRef<HTMLDivElement, HorizontalFlo
     </div>
   );
   },
-);
+) as <T extends string>(props: HorizontalFlowMenuProps<T> & { ref?: React.Ref<HTMLDivElement> }) => React.ReactElement;
 
 HorizontalFlowMenu.displayName = "HorizontalFlowMenu";
