@@ -7,6 +7,8 @@ import LiquidEtherBackground from "@/components/reactbits/LiquidEtherBackground"
 import { SplitText } from "@/components/reactbits/SplitText";
 import { SpotlightCard } from "@/components/reactbits/SpotlightCard";
 import { PixelCard } from "@/components/reactbits/PixelCard";
+import { ScrollFloat } from "@/components/reactbits/ScrollFloat";
+import { RollingGallery } from "@/components/reactbits/RollingGallery"; // Ensure RollingGallery is imported
 import { usePages } from "@/hooks/usePages";
 import { useSiteSetting } from "@/hooks/useSettings";
 import { useArtworks } from "@/hooks/useArtworks";
@@ -23,6 +25,10 @@ const Home = () => {
   const { data: homePage } = usePages("home");
   const tagline = useSiteSetting("site_tagline", "Digital Artist & Creative Developer");
   const { data: featuredArtworks, isLoading: artworksLoading } = useArtworks({ featured: true });
+  
+  // Ensure featuredArtworks is an array before slicing
+  const artworksForGallery = featuredArtworks ? featuredArtworks.slice(0, 6) : [];
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
@@ -77,20 +83,7 @@ const Home = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 motion-reduce:animate-none"
-        >
-          <div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-border/50 p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="h-1.5 w-1.5 rounded-full bg-primary motion-reduce:animate-none"
-            />
-          </div>
-        </motion.div>
+        <ScrollFloat />
       </section>
 
       {/* Featured Work Preview */}
@@ -114,19 +107,18 @@ const Home = () => {
                   <ArtworkSkeleton key={i} />
                 ))}
               </div>
-            ) : featuredArtworks && featuredArtworks.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                {featuredArtworks.slice(0, 3).map((artwork, index) => (
-                  <SectionReveal key={artwork.id} delay={index * 0.1}>
-                    <Link to={`/art/${artwork.slug}`} className="block">
-                      <PixelCard
-                        title={artwork.title}
-                        imageUrl={artwork.cover_url}
-                      />
-                    </Link>
-                  </SectionReveal>
-                ))}
-              </div>
+            ) : artworksForGallery.length > 0 ? (
+              <RollingGallery
+                items={artworksForGallery.map((item) => ({
+                  id: item.id,
+                  title: item.title,
+                  subtitle: item.category,
+                  imageUrl: item.cover_url,
+                  href: `/art/${item.slug}`,
+                  footer: <span className="text-sm">{item.year}</span>,
+                }))}
+                speed={24}
+              />
             ) : (
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 {FEATURED_DISCIPLINES.map((item, index) => (
