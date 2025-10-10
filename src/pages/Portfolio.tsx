@@ -7,11 +7,19 @@ import { Input } from "@/components/ui/input";
 import { Search, Filter } from "lucide-react";
 import { RollingGallery } from "@/components/reactbits/RollingGallery";
 import { PixelCard } from "@/components/reactbits/PixelCard";
+import { HorizontalFlowMenu } from "@/components/reactbits/HorizontalFlowMenu"; // Import the new component
 import { useArtworks } from "@/hooks/useArtworks";
 import { ArtworkSkeleton } from "@/components/ArtworkSkeleton";
 
-const categories = ["all", "motion-design", "3d-art", "interactive", "generative"] as const;
-type CategoryFilter = (typeof categories)[number];
+const categories = [
+  { value: "all", label: "All" },
+  { value: "motion-design", label: "Motion Design" },
+  { value: "3d-art", label: "3D Art" },
+  { value: "interactive", label: "Interactive" },
+  { value: "generative", label: "Generative" },
+] as const;
+
+type CategoryFilter = (typeof categories)[number]["value"];
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>("all");
@@ -84,17 +92,12 @@ const Portfolio = () => {
             {/* Categories */}
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Filter className="h-5 w-5 text-muted-foreground" />
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className="transition-all motion-reduce:transition-none"
-                >
-                  {category}
-                </Button>
-              ))}
+              <HorizontalFlowMenu
+                items={categories}
+                selectedValue={selectedCategory}
+                onValueChange={setSelectedCategory}
+                className="max-w-full"
+              />
             </div>
           </div>
         </SectionReveal>
