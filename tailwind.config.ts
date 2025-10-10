@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
-  darkMode: ["class"],
+  // Removed darkMode: ["class"] to enforce a single theme
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
@@ -59,12 +59,9 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        surface: {
-          0: "hsl(var(--surface-0))",
-          1: "hsl(var(--surface-1))",
-          2: "hsl(var(--surface-2))",
-          3: "hsl(var(--surface-3))",
-        },
+        // Note: 'surface' is defined twice, consolidating to the second, more complete definition.
+        // If there was a specific reason for two definitions, please clarify.
+        // For now, I'm keeping the structure as it was, but removing the duplicate `surface` key.
       },
       backgroundImage: {
         "gradient-primary": "var(--gradient-primary)",
