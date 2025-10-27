@@ -23,6 +23,18 @@ vi.mock("@/contexts/AuthContext", () => ({
   }),
 }));
 
+vi.mock("@/contexts/I18nContext", () => ({
+  useI18n: () => ({
+    locale: "en",
+    setLocale: vi.fn(),
+    t: (key: string) => key,
+  }),
+}));
+
+vi.mock("@/components/LanguageSwitcher", () => ({
+  LanguageSwitcher: () => <div data-testid="language-switcher" />,
+}));
+
 vi.mock("@/components/reactbits/FlowingMenu", () => ({
   FlowingMenu: () => <div data-testid="flowing-menu" />,
 }));
