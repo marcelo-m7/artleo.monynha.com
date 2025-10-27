@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Navigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Palette, Calendar, Mail, Settings, ArrowRight } from "lucide-react";
+import { Palette, Calendar, Mail, Settings, ArrowRight, Github } from "lucide-react";
 
 const Dashboard = () => {
   const { isAdmin, isLoading } = useAuth();
@@ -50,6 +50,13 @@ const Dashboard = () => {
       icon: Settings,
       href: "/admin/settings",
       color: "text-orange-500",
+    },
+    {
+      title: "GitHub Search",
+      description: "Search repositories for inspiration",
+      icon: Github,
+      href: "/admin/github",
+      color: "text-slate-500",
     },
   ];
 

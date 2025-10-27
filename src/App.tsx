@@ -17,6 +17,7 @@ import ArtworksManager from "./pages/admin/ArtworksManager";
 import ExhibitionsManager from "./pages/admin/ExhibitionsManager";
 import MessagesManager from "./pages/admin/MessagesManager";
 import SettingsManager from "./pages/admin/SettingsManager";
+import GitHubSearch from "./pages/admin/GitHubSearch";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,7 +28,12 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
           <ScrollToTop />
           <Navigation />
           <Routes>
@@ -42,6 +48,7 @@ const App = () => (
             <Route path="/admin/exhibitions" element={<ExhibitionsManager />} />
             <Route path="/admin/messages" element={<MessagesManager />} />
             <Route path="/admin/settings" element={<SettingsManager />} />
+            <Route path="/admin/github" element={<GitHubSearch />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
