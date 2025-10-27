@@ -5,38 +5,43 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { FlowingMenu } from "./FlowingMenu";
 import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { BrandMark } from "@/components/brand/BrandMark";
-
-const links = [
-  {
-    href: "/",
-    label: "Home",
-    accent: "linear-gradient(135deg, rgba(168, 85, 247, 0.7), rgba(99, 102, 241, 0.7))",
-  },
-  {
-    href: "/portfolio",
-    label: "Portfolio",
-    accent: "linear-gradient(135deg, rgba(14, 165, 233, 0.7), rgba(236, 72, 153, 0.7))",
-  },
-  {
-    href: "/about",
-    label: "About",
-    accent: "linear-gradient(135deg, rgba(34, 197, 94, 0.7), rgba(147, 51, 234, 0.7))",
-  },
-  {
-    href: "/contact",
-    label: "Contact",
-    accent: "linear-gradient(135deg, rgba(251, 191, 36, 0.7), rgba(59, 130, 246, 0.7))",
-  },
-];
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const GooeyNav = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const reduceMotion = useReducedMotion();
   const { user, isAdmin, signOut } = useAuth();
+  const { t } = useI18n();
+  
+  const getLinks = () => [
+    {
+      href: "/",
+      label: t("nav.home"),
+      accent: "linear-gradient(135deg, rgba(168, 85, 247, 0.7), rgba(99, 102, 241, 0.7))",
+    },
+    {
+      href: "/portfolio",
+      label: t("nav.portfolio"),
+      accent: "linear-gradient(135deg, rgba(14, 165, 233, 0.7), rgba(236, 72, 153, 0.7))",
+    },
+    {
+      href: "/about",
+      label: t("nav.about"),
+      accent: "linear-gradient(135deg, rgba(34, 197, 94, 0.7), rgba(147, 51, 234, 0.7))",
+    },
+    {
+      href: "/contact",
+      label: t("nav.contact"),
+      accent: "linear-gradient(135deg, rgba(251, 191, 36, 0.7), rgba(59, 130, 246, 0.7))",
+    },
+  ];
+
+  const links = getLinks();
 
   const menuId = "mobile-navigation";
   const menuLabelId = "mobile-navigation-title";
@@ -233,6 +238,11 @@ export const GooeyNav = () => {
                     </Button>
                   </Link>
                 )}
+
+                {/* Language Switcher */}
+                <div className="border-l border-border/50 pl-2">
+                  <LanguageSwitcher />
+                </div>
               </div>
               <button
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-card/70 p-2 text-foreground transition-colors hover:border-primary/80 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none md:hidden"
