@@ -15,7 +15,7 @@ import { ArrowLeft, Save } from "lucide-react";
 interface Setting {
   id: string;
   key: string;
-  value: any;
+  value: string | number | boolean | object | null;
   description: string | null;
   is_public: boolean;
 }
@@ -38,7 +38,7 @@ const SettingsManager = () => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ id, value, is_public }: { id: string; value: any; is_public: boolean }) => {
+    mutationFn: async ({ id, value, is_public }: { id: string; value: string | number | boolean | object | null; is_public: boolean }) => {
       const { error } = await supabase
         .from("settings")
         .update({ value, is_public })
@@ -95,7 +95,7 @@ const SettingsManager = () => {
 
 interface SettingCardProps {
   setting: Setting;
-  onUpdate: (value: any, is_public: boolean) => void;
+  onUpdate: (value: string | number | boolean | object | null, is_public: boolean) => void;
 }
 
 const SettingCard = ({ setting, onUpdate }: SettingCardProps) => {

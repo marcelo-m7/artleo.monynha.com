@@ -12,6 +12,26 @@ vi.mock("@/contexts/AuthContext", () => ({
   }),
 }));
 
+vi.mock("@/contexts/I18nContext", () => ({
+  useI18n: () => ({
+    locale: "en",
+    setLocale: vi.fn(),
+    t: (key: string) => {
+      const translations: Record<string, string> = {
+        "nav.home": "Home",
+        "nav.portfolio": "Portfolio",
+        "nav.about": "About",
+        "nav.contact": "Contact",
+      };
+      return translations[key] || key;
+    },
+  }),
+}));
+
+vi.mock("@/components/LanguageSwitcher", () => ({
+  LanguageSwitcher: () => <div data-testid="language-switcher" />,
+}));
+
 vi.mock("gsap", () => ({
   gsap: {
     timeline: vi.fn(() => ({

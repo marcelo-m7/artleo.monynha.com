@@ -264,7 +264,7 @@ exports[`Navigation > renders the custom brand SVG 1`] = `
                 class="relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors text-primary"
                 href="/"
               >
-                Home
+                nav.home
               </a>
               <span
                 class="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-primary/30 via-secondary/20 to-primary/30 blur-xl"
@@ -277,7 +277,7 @@ exports[`Navigation > renders the custom brand SVG 1`] = `
                 class="relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors text-muted-foreground hover:text-foreground"
                 href="/portfolio"
               >
-                Portfolio
+                nav.portfolio
               </a>
             </div>
             <div
@@ -287,7 +287,7 @@ exports[`Navigation > renders the custom brand SVG 1`] = `
                 class="relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors text-muted-foreground hover:text-foreground"
                 href="/about"
               >
-                About
+                nav.about
               </a>
             </div>
             <div
@@ -297,7 +297,7 @@ exports[`Navigation > renders the custom brand SVG 1`] = `
                 class="relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors text-muted-foreground hover:text-foreground"
                 href="/contact"
               >
-                Contact
+                nav.contact
               </a>
             </div>
             <a
@@ -335,6 +335,13 @@ exports[`Navigation > renders the custom brand SVG 1`] = `
                 Login
               </button>
             </a>
+            <div
+              class="border-l border-border/50 pl-2"
+            >
+              <div
+                data-testid="language-switcher"
+              />
+            </div>
           </div>
           <button
             aria-controls="mobile-navigation"
