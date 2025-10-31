@@ -122,8 +122,8 @@ export const translations = {
     // 404
     notFound: {
       title: "404 - Page Not Found",
-      description: "The page you're looking for doesn't exist.",
-      goHome: "Go Home",
+      description: "Oops! Page not found. The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+      goHome: "Return to Home",
     },
   },
   
@@ -242,8 +242,8 @@ export const translations = {
     
     notFound: {
       title: "404 - Página Não Encontrada",
-      description: "A página que você procura não existe.",
-      goHome: "Ir para Início",
+      description: "Ops! Página não encontrada. A página que você procura pode ter sido removida, teve seu nome alterado ou está temporariamente indisponível.",
+      goHome: "Voltar para Início",
     },
   },
 };
